@@ -10,6 +10,7 @@
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../materializecss-styles/materializecss-styles.html">
     <link rel="import" href="../lrndesign-lists.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -18,9 +19,249 @@
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic lrndesign-lists demo</h3>
+      <h4>Unordered lists with <tt>&lt;lrndesign-lists-ul/&gt;</tt></h4>
       <demo-snippet>
         <template>
-          <lrndesign-lists></lrndesign-lists>
+          <h5>Unordered Lists: <iron-icon icon="check-circle" class="iron-icon-bullet blue-text text-darken-4"></iron-icon></h5>
+          <lrndesign-lists-ul bullets="check-circle" colors="gree-text text-darken-4">
+            <ul>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+            </ul>
+          </lrndesign-lists-ul>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Unordered Lists: <iron-icon icon="cancel" class="iron-icon-bullet red-text text-darken-4"></iron-icon></h5>
+          <lrndesign-lists-ul bullets="cancel" colors="red-text text-darken-4">
+            <ul>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+            </ul>
+          </lrndesign-lists-ul>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Unordered Lists: <iron-icon icon="arrow-forward" class="iron-icon-bullet blue-text text-darken-4"></iron-icon></h5>
+          <lrndesign-lists-ul bullets="arrow-forward" colors="blue-text text-darken-4">
+            <ul>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+              <li>Item</li>
+            </ul>
+          </lrndesign-lists-ul>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Unordered Lists: <iron-icon icon="star" class="iron-icon-bullet yellow-text text-darken-3"></iron-icon> / Mixed</h5>
+          <lrndesign-lists-ul bullets="star,star-half,star-border,"
+          colors="yellow-text text-darken-3,light-blue-text text-darken-4,pink-text text-darken-3">
+            <ul>
+              <li>Item</li>
+              <li>Item
+                <ul>
+                  <li>Item</li>
+                  <li>Item
+                      <ul>
+                        <li>Item</li>
+                        <li>Item</li>
+                      </ul>
+                    </li>
+                </ul>
+              </li>
+            </ul>
+          </lrndesign-lists-ul>
+        </template>
+      </demo-snippet>
+      <h4>Ordered lists with <tt>&lt;lrndesign-lists-ol/&gt;</tt></h4>
+      <demo-snippet>
+        <template>
+          <h5>Ordered Lists: 1,a,i...</h5>
+          <lrndesign-lists-ol numbering-level="3">
+            <ol>
+              <li>Item</li>
+              <li>Item
+                <ol>
+                  <li>Item</li>
+                  <li>Item
+                      <ol>
+                        <li>Item</li>
+                        <li>Item</li>
+                      </ol>
+                    </li>
+                </ol>
+              </li>
+            </ol>
+          </lrndesign-lists-ol>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Ordered Lists 1,1...</h5>
+          <lrndesign-lists-ol numbering-level="0">
+            <ol>
+              <li>Item</li>
+              <li>Item
+                <ol>
+                  <li>Item</li>
+                  <li>Item
+                      <ol>
+                        <li>Item</li>
+                        <li>Item</li>
+                      </ol>
+                    </li>
+                </ol>
+              </li>
+            </ol>
+          </lrndesign-lists-ol>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Ordered Lists I,A,1,a,i...</h5>
+          <lrndesign-lists-ol numbering-level="1">
+            <ol>
+              <li>Item</li>
+              <li>Item
+                <ol>
+                  <li>Item</li>
+                  <li>Item
+                      <ol>
+                        <li>Item</li>
+                        <li>Item
+                            <ol>
+                              <li>Item</li>
+                              <li>Item
+                                  <ol>
+                                    <li>Item</li>
+                                    <li>Item</li>
+                                  </ol>
+                                </li>
+                            </ol>
+                          </li>
+                      </ol>
+                    </li>
+                </ol>
+              </li>
+            </ol>
+          </lrndesign-lists-ol>
+        </template>
+      </demo-snippet>
+      <h4>Custom ordered lists with <tt>&lt;lrndesign-lists-custom/&gt;</tt></h4>
+      <demo-snippet>
+        <template>
+          <h5>Custom Lists with prefixes and separators (default inheritance)</h5>
+          <lrndesign-lists-custom 
+          prefixes="Topic ,Subtopic ,Detail " 
+          numbering="decimal" 
+          separator="-">
+            <ol>
+              <li>Item
+                  <ol>
+                    <li>Item
+                        <ol>
+                          <li>Item</li>
+                          <li>Item</li>
+                        </ol>
+                      </li>
+                    <li>Item
+                        <ol>
+                          <li>Item</li>
+                          <li>Item</li>
+                        </ol>
+                      </li>
+                  </ol>
+                </li>
+              <li>Item
+                <ol>
+                  <li>Item
+                      <ol>
+                        <li>Item</li>
+                        <li>Item</li>
+                      </ol>
+                    </li>
+                  <li>Item
+                      <ol>
+                        <li>Item</li>
+                        <li>Item</li>
+                      </ol>
+                    </li>
+                </ol>
+              </li>
+            </ol>
+          </lrndesign-lists-custom>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Custom Lists with prefixes, numbering, and separators (no inheritance)</h5>
+          <lrndesign-lists-custom 
+          prefixes="Module ,Lesson ,Topic "
+          numbering="upper-alpha, decimal, lower-alpha"
+          separator="." inherit="none">
+            <ol>
+              <li>Item
+                <ol>
+                  <li>Item</li>
+                </ol>
+              </li>
+              <li>Item</li>
+              <li>Item
+                <ol>
+                  <li>Item
+                    <ol>
+                      <li>Item</li>
+                    </ol>
+                  </li>
+                  <li>Item</li>
+                  <li>Item
+                    <ol>
+                      <li>Item</li>
+                      <li>Item</li>
+                      <li>Item</li>
+                    </ol>
+                  </li>
+                </ol>
+              </li>
+            </ol>
+          </lrndesign-lists-custom>
+        </template>
+      </demo-snippet>
+      <demo-snippet>
+        <template>
+          <h5>Custom Lists with prefixes, numbering, and separators (inherited prefixes and numbering)</h5>
+          <lrndesign-lists-custom 
+          prefixes="Article ,Section " 
+          numbering="upper-roman, decimal, lower-alpha" 
+          separator=", " inherit="both">
+            <ol>
+              <li>Item
+                <ol>
+                  <li>Item</li>
+                </ol>
+              </li>
+              <li>Item</li>
+              <li>Item
+                <ol>
+                  <li>Item
+                  </li>
+                  <li>Item</li>
+                  <li>Item</li>
+                </ol>
+              </li>
+            </ol>
+          </lrndesign-lists-custom>
         </template>
       </demo-snippet>
     </div>

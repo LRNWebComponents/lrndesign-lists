@@ -1,0 +1,133 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../materializecss-styles/colors.html">
+
+<!--
+`lrndesign-lists-ol`
+A LRN element
+
+@demo demo/index.html
+
+@microcopy - the mental model for this element
+ -
+ -
+ -
+
+-->
+
+<dom-module id="lrndesign-lists-ol">
+  <template>
+    <style>
+      :host {
+        display: block;
+        counter-reset: counter0;
+      }
+      :host .ol-level-1 ::slotted(ol) {
+        list-style-type: upper-roman;
+      }
+      :host .ol-level-2 ::slotted(ol), 
+      :host .ol-level-1 ::slotted(ol) ol {
+        list-style-type: upper-alpha;
+      }
+      :host .ol-level-0 ::slotted(ol),
+      :host .ol-level-3 ::slotted(ol), 
+      :host .ol-level-2 ::slotted(ol) ol, 
+      :host .ol-level-1 ::slotted(ol) ol ol {
+        list-style-type: decimal;
+      }
+      :host .ol-level-4 ::slotted(ol), 
+      :host .ol-level-3 ::slotted(ol) ol, 
+      :host .ol-level-2 ::slotted(ol) ol ol, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol {
+        list-style-type: lower-alpha;
+      }
+      :host .ol-level-5 ::slotted(ol), 
+      :host .ol-level-4 ::slotted(ol) ol, 
+      :host .ol-level-3 ::slotted(ol) ol ol, 
+      :host .ol-level-2 ::slotted(ol) ol ol ol, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol ol {
+        list-style-type: lower-roman;
+      }
+      :host .ol-level-8 ::slotted(ol),
+      :host .ol-level-7 ::slotted(ol),
+      :host .ol-level-6 ::slotted(ol), 
+      :host .ol-level-5 ::slotted(ol) ol, 
+      :host .ol-level-4 ::slotted(ol) ol ol, 
+      :host .ol-level-3 ::slotted(ol) ol ol ol, 
+      :host .ol-level-2 ::slotted(ol) ol ol ol ol, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol ol ol {
+        counter-reset: list;
+      }
+      :host .ol-level-8 ::slotted(ol) > li,
+      :host .ol-level-7 ::slotted(ol) > li,
+      :host .ol-level-6 ::slotted(ol) > li,
+      :host .ol-level-6 ::slotted(ol) > li, 
+      :host .ol-level-5 ::slotted(ol) ol > li, 
+      :host .ol-level-4 ::slotted(ol) ol ol > li, 
+      :host .ol-level-3 ::slotted(ol) ol ol ol > li, 
+      :host .ol-level-2 ::slotted(ol) ol ol ol ol > li, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol ol ol > li {
+        list-style: none;
+        position: relative;
+      }
+      :host .ol-level-6 ::slotted(ol) > li:before, 
+      :host .ol-level-5 ::slotted(ol) ol > li:before, 
+      :host .ol-level-4 ::slotted(ol) ol ol > li:before, 
+      :host .ol-level-3 ::slotted(ol) ol ol ol > li:before, 
+      :host .ol-level-2 ::slotted(ol) ol ol ol ol > li:before, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol ol ol > li:before {
+        counter-increment: list;
+        content: counter(list, decimal) ".) ";
+        position: absolute;
+        left: -1.4em;
+      } 
+      :host .ol-level-7 ::slotted(ol) > li:before, 
+      :host .ol-level-6 ::slotted(ol) ol > li:before, 
+      :host .ol-level-5 ::slotted(ol) ol ol > li:before, 
+      :host .ol-level-4 ::slotted(ol) ol ol ol > li:before, 
+      :host .ol-level-3 ::slotted(ol) ol ol ol ol > li:before, 
+      :host .ol-level-2 ::slotted(ol) ol ol ol ol ol > li:before, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol ol ol ol > li:before {
+        content: counter(list, lower-alpha) ".) ";
+      }
+      :host .ol-level-8 ::slotted(ol) > li:before, 
+      :host .ol-level-7 ::slotted(ol) ol > li:before, 
+      :host .ol-level-6 ::slotted(ol) ol ol > li:before, 
+      :host .ol-level-5 ::slotted(ol) ol ol ol > li:before, 
+      :host .ol-level-4 ::slotted(ol) ol ol ol ol > li:before, 
+      :host .ol-level-3 ::slotted(ol) ol ol ol ol ol > li:before, 
+      :host .ol-level-2 ::slotted(ol) ol ol ol ol ol ol > li:before, 
+      :host .ol-level-1 ::slotted(ol) ol ol ol ol ol ol ol > li:before {
+        content: counter(list, lower-roman) ".) ";
+      }
+    </style>
+    <div id="ol" class$="ol-level-[[numberingLevel]]">
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'lrndesign-lists-ol',
+
+      properties: {
+        /* 
+         * The level at which numbering will start. For example:
+         * Level 0: 1  1  1  1  1  1  1  1
+         * Level 1: I. A. 1. a. i. 1) a) i)
+         * Level 2: A. 1. a. i. 1) a) i)
+         * Level 3  1. a. i. 1) a) i)
+         * Level 4: a. i. 1) a) i)
+         * Level 5: i. 1) a) i)
+         * Level 6: 1) a) i)
+         * Level 7: a) i)
+         * Level 8: i)
+         */
+        numberingLevel: {
+          type: Number,
+          value: 3,
+        },
+      },
+    });
+  </script>
+</dom-module>
