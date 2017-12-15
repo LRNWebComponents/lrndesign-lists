@@ -1,0 +1,28 @@
+{
+  "name": "lrndesign-lists",
+  "description": "A LRN element",
+  "main": "lrndesign-lists.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.10.1",
+    "materializecss-styles": "LRNWebComponents/materializecss-styles#^1.1.0",
+    "iron-icons": "PolymerElements/iron-icons#^2.0.1",
+    "iron-icon": "PolymerElements/iron-icon#^2.0.1"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "homepage": "https://github.com/LRNWebComponents/lrndesign-lists",
+  "_release": "597d16e875",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "597d16e875abd2af2379f332d92a8c18749b34d1"
+  },
+  "_source": "https://github.com/LRNWebComponents/lrndesign-lists.git",
+  "_target": "master",
+  "_originalSource": "LRNWebComponents/lrndesign-lists",
+  "_direct": true
+}

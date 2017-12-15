@@ -1,0 +1,99 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../materializecss-styles/materializecss-styles.html">
+
+<!--
+`lrndesign-lists-ul`
+A LRN element
+
+@demo demo/index.html
+
+@microcopy - the mental model for this element
+ -
+ -
+ -
+
+-->
+
+<dom-module id="lrndesign-lists-ul">
+  <template>
+    <style>
+      :host {
+        display: block;
+        counter-reset: counter0;
+      }
+      :host div ::slotted(ul),
+      :host div ::slotted(ul) ul {
+        list-style: none;
+        text-indent: -1.52em;
+      }
+      :host div ::slotted(ul) li {
+        line-height: 1.6em;
+      }
+      :host div ::slotted(ul) li .iron-icon-bullet {
+        height: 1em;
+        width: 1em;
+        margin-right: 0.5em;
+      }
+    </style>
+    <div id="ul">
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'lrndesign-lists-ul',
+
+      properties: {
+        /* 
+         * An comma-separated list of bullet styles based on iron-icons
+         * eg., check, check-circle, cancel, star
+         */
+        bullets: {
+          type: String,
+          value: 'disc',
+        },
+        /* 
+         * An comma-separated list of bullet colors, which use materialize CSS colors. 
+         * (See http://materializecss.com/color.html.)
+         */
+        colors: {
+          type: String,
+          value: '',
+        },
+      },
+      attached: function(){
+        let root = this, nodes = Polymer.dom(root.$.ul).getEffectiveChildNodes();
+        this.__bullets = this.bullets !== undefined ? this.bullets.split(',') : [];
+        this.__colors = this.colors !== undefined ? this.colors.split(',') : [];
+        this._setAttributes(nodes,0);
+      },
+      _setAttributes(nodes,level){
+        let root = this, 
+        bullet = level >= root.__bullets.length ? root.__bullets[root.__bullets.length-1] : root.__bullets[level],
+        color = level >= root.__colors.length ? root.__colors[root.__colors.length-1] : root.__colors[level];
+        for (i in nodes) {
+          if (nodes[i] instanceof HTMLElement) {
+            let ul = nodes[i].childNodes;
+            nodes[i].setAttribute('list-style',bullet);
+            if(ul.length > 0){
+              for (j in ul) {
+                let li=ul[j];
+                if (li instanceof HTMLElement) {
+                  let icon = document.createElement('iron-icon');
+                  console.log(bullet,color,'<iron-icon icon="'+bullet+'" class="iron-icon-bullet '+color+'"></iron-icon>');
+                  icon.setAttribute('icon',bullet);
+                  icon.setAttribute('class','iron-icon-bullet '+color);
+                  root._setAttributes(li.childNodes,level+1);
+                  li.insertBefore(icon, li.childNodes[0]);
+                }
+              }
+            }
+          }
+        }
+      },
+    });
+  </script>
+</dom-module>

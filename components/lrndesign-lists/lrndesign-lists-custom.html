@@ -1,0 +1,188 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`lrndesign-lists-custom`
+A LRN element
+
+@demo demo/index.html
+
+@microcopy - the mental model for this element
+ -
+ -
+ -
+
+-->
+
+<dom-module id="lrndesign-lists-custom">
+  <template>
+    <style>
+      :host {
+        display: block;
+        counter-reset: counter0;
+      }
+      :host div ::slotted(ol),
+      :host div ::slotted(ol) ol {
+        list-style: none;
+      }
+      :host div ::slotted(ol) li:before {
+        content: attr(data-content);
+      }
+    </style>
+    <div id="ol">
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'lrndesign-lists-custom',
+
+      properties: {
+        /* 
+         * A comma-separated list of prefixes, 
+         * where "Article , Section "would result in: 
+         * Article 1
+         *    Section 1.a
+         *      1.a.i.
+         *
+         * Or where "Topic , Subtopic, Detail" would result in:
+         * Topic 1
+         *    Subtopic 1.a
+         *      Detail 1.a.i.
+         */
+        prefixes: {
+          type: String,
+          value: '',
+        },
+        /* 
+         * A comma-separated list of numbered list-styles, 
+         * where "decimal,lower-alpha,lower-roman" would result in: 
+         * Article 1
+         *    Section 1.a
+         *      1.a.i.
+         *
+         * Or where "decimal" would result in:
+         * Topic 1
+         *    Subtopic 1.1
+         *      Detail 1.1.1.
+         */
+        numbering: {
+          type: String,
+          value: 'decimal',
+        },
+        /* 
+         * The separator used, for example:
+         * "-":   1-1
+         * ".":   1.1
+         * ". ":  1. 1
+         */
+        separator: {
+          type: String,
+          value: '.',
+        },
+        /* 
+         * Inherit "numbering", "both" prefix and numbering, or "none" from parent
+         */
+        inherit: {
+          type: String,
+          value: 'numbering',
+        },
+      },
+      attached: function(){
+        let root = this;
+        let nodes = Polymer.dom(root.$.ol).getEffectiveChildNodes();
+        root._setAttributes(nodes,0,'');
+      },
+      _setAttributes(nodes,level,inherited){
+        let root = this, counter = 1;
+        for (i in nodes) {
+          if (nodes[i] instanceof HTMLElement) {
+            let ol = nodes[i].childNodes;
+            if(ol.length > 0){
+              for (j in ol) {
+                let li=ol[j];
+                if (li instanceof HTMLElement) {
+                  let prefix = root._getPrefix(level), num = root._getNumbering(level,counter);
+                  if (root.inherit.toLowerCase() == 'both') {
+                    li.setAttribute('data-content',inherited+prefix+num+'. ');
+                    root._setAttributes(li.childNodes,level+1,inherited+prefix+num+root.separator);
+                  } else if (root.inherit.toLowerCase() == 'numbering') {
+                    li.setAttribute('data-content',prefix+inherited+num+'. ');
+                    root._setAttributes(li.childNodes,level+1,inherited+num+root.separator);
+                  } else {
+                    li.setAttribute('data-content',prefix+num+'. ');
+                    root._setAttributes(li.childNodes,level+1,'');
+                  }
+                  counter++;
+                }
+              }
+            }
+          }
+        }
+      },
+      /* 
+       * Gets the prefix for a list item.
+       */
+      _getPrefix(level){
+        let prefixes = this.prefixes.split(',');
+        if(level < prefixes.length){
+          return prefixes[level];
+        } else {
+          return '';
+        }
+      },
+      /* 
+       * Gets the prefix for a list item.
+       */
+      _getNumbering(level,counter){
+        let numbering = this.numbering.split(','), 
+            numlevel = level >= numbering.length ? numbering[numbering.length-1].trim() : numbering[level].trim(), convert;
+        if(numlevel.toLowerCase() =='decimal') {
+          convert = counter;
+        } else {
+          let type = numlevel.split('-'), lowercase = type[0].trim()=='lower';
+          if(type[1].trim()=='alpha') {
+            convert = this._convertAlpha(counter,lowercase);
+          } else { 
+            convert = this._convertRoman(counter,lowercase);
+          }
+        }
+        return convert;
+      },
+      /* 
+       * Gets the alpha numeral.
+       */
+      _convertAlpha(num,lowercase){
+        let alpha = '', 
+            numerals = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), 
+            j= Math.log(num)/Math.log(10), 
+            k= Math.log(26)/Math.log(10), 
+            i = Math.floor(j/k);
+        while(i >= 0) {
+          let multiplier = Math.pow(26,i), letter = Math.floor(num/multiplier);
+          num = num - multiplier * letter;
+          alpha += numerals[letter-1];
+          i--;
+        }
+        if (lowercase) alpha = alpha.toLowerCase();
+        return alpha;
+      },
+      /* 
+       * Gets the roman numeral.
+       */
+      _convertRoman(counter,lowercase){
+        let roman = '', 
+            numerals = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
+        for ( i in numerals ) {
+          while ( counter >= numerals[i] ) {
+            roman += i;
+            counter -= numerals[i];
+          }
+        }
+        if (lowercase) roman = roman.toLowerCase();
+        return roman;
+      },
+    });
+  </script>
+</dom-module>
